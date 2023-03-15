@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import taskContext from './taskContext'
 
 const TaskState = (props) => {
-    const host = "http://localhost";
+    const host = process.env.REACT_APP_SERVER_DOMAIN;
     const [tasks, setTasks] = useState([]);
 
     //Fetching all tasks
