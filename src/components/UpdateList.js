@@ -33,7 +33,7 @@ const UpdateList = () => {
     }
     return (
         <div className='h-screen w-screen flex items-center justify-center bg-emerald-100'>
-            <div className='rounded-md border-lime-900 w-3/5 flex flex-col items-center justify-center shadow-2xl shadow-emerald-900 bg-white'>
+            <div className='rounded-md border-lime-900 w-11/12 sm:w-3/5 flex flex-col items-center justify-center shadow-2xl shadow-emerald-900 bg-white h-2/5 sm:h-1/2'>
                 <h2 className='font-bold text-2xl my-3'>Update the list</h2>
                 <input placeholder='Enter the name of the list' className={`border rounded-md py-3 px-3 w-4/5 outline-none ${showError ? "border-red-600":""}`} name='title' onChange={onChange} value={list.title} />
                 <div className='flex items-center justify-end my-3 w-4/5'>

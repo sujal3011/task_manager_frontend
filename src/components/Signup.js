@@ -47,7 +47,7 @@ const Signup = () => {
     return (
         <div>
             <div className="flex items-center justify-center h-screen bg-no-repeat bg-cover bg-center bg-opacity-50 bg-emerald-100">
-                <div className=" border shadow-2xl shadow-emerald-900 rounded-lg w-3/5 flex flex-col items-center bg-white my-5">
+                <div className=" border shadow-2xl shadow-emerald-900 rounded-lg w-11/12 sm:w-3/5 flex flex-col items-center bg-white my-5">
                     <h4 className="text-center font-bold text-2xl my-5 font-serif">Create Account</h4>
                     <form onSubmit={onSubmit} className="w-full flex flex-col items-center">
                         <div className="flex flex-col items-center w-full">

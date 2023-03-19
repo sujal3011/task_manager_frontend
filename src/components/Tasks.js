@@ -54,7 +54,7 @@ const Tasks = () => {
 
 
       <div className=' w-screen flex items-center justify-center mb-10 '>
-        <div className='border rounded-md border-lime-900 w-4/5 lg:w-3/5 flex flex-col items-center justify-center bg-emerald-800'>
+        <div className='border rounded-md border-lime-900 w-11/12 sm:w-3/5 flex flex-col items-center justify-center bg-emerald-800'>
           <h2 className='font-bold text-2xl my-3 text-white'>Add a new task</h2>
 
           <input placeholder='What to do?' className="border rounded-md py-3 px-3 w-4/5 outline-none" name='description' onChange={onChange} value={task.description} />

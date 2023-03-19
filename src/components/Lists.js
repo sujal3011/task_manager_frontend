@@ -22,15 +22,15 @@ const Lists = () => {
     }, [])
 
     return (
-        <div className='border rounded-md flex flex-col items-center justify-start w-9/12 h-4/5 my-8  '>
+        <div className='border rounded-md flex flex-col items-center justify-start w-full sm:w-9/12 h-4/5 my-8  '>
 
-            <div className='flex  border-lime-900 rounded-t-md items-center justify-between px-3 py-3 w-4/5 mt-4 bg-emerald-800'>
+            <div className='flex  border-lime-900 rounded-t-md items-center justify-between px-3 py-3 w-11/12 sm:w-4/5 mt-4 bg-emerald-800'>
                 <h2 className='font-bold text-2xl text-white'>YOUR LISTS</h2>
                 <button className='text-white font-bold bg-emerald-400 px-3 py-2 mx-3'><Link to="/createList">Create new List</Link></button>
             </div>
 
 
-            <div className='flex flex-col   items-center justify-between px-3 py-3 w-4/5 mb-4 overflow-y-auto no-scrollbar border border-slate-300'>
+            <div className='flex flex-col items-center justify-between px-3 py-3 w-11/12 sm:w-4/5 mb-4 overflow-y-auto no-scrollbar border border-slate-300'>
                 {lists.map((list) => {
                     return (
 
@@ -40,7 +40,7 @@ const Lists = () => {
                                 <i className="fa-solid fa-trash mx-3 text-emerald-400 cursor-pointer " onClick={()=>{deleteList(list._id)}}></i>
                                 <Link to={`/updateList/${list._id}`} className='cursor-pointer'><i className="fa-solid fa-pen-to-square mx-3 text-emerald-400"></i></Link>
                             </div>
-                            <button className='text-white font-bold bg-emerald-400 px-3 py-2 mx-3'>
+                            <button className='text-sm sm:text-lg text-white font-bold bg-emerald-400 px-3 py-2 mx-3'>
                             <Link to={`/${list._id}/tasks`} className='cursor-pointer'>View Tasks</Link>
                             </button>
                         </div>
