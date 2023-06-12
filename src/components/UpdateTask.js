@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const UpdateTask = () => {
-    const { list_id,task_id } = useParams();
+    const { task_id } = useParams();
     let showError = false;
     const navigate = useNavigate();
     const context = useContext(taskContext);
@@ -19,7 +19,7 @@ const UpdateTask = () => {
     const handleClick = () => {
 
         if (task.description.length >= 5) {
-            editTask(list_id,task_id, task.description,task.dueDate);
+            editTask(task_id, task.description,task.dueDate);
             // setTask({ title: "" });
             navigate("/");
         }

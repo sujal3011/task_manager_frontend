@@ -7,16 +7,13 @@ const TaskState = (props) => {
 
     //Fetching all tasks
 
-    const getTasks = async (list_id) => {
-
-
-        const response = await fetch(`${host}/lists/${list_id}/gettasks`, {
+    const getTasks = async (list_id,status="all") => {
+        const response = await fetch(`${host}/tasks/${list_id}/gettasks?status=${status}`, {
             method: 'GET',
-
             headers: {
                 'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("token")
             },
-
         });
         const json = await response.json();
         // console.log(json);
@@ -27,14 +24,12 @@ const TaskState = (props) => {
     // Adding a new task
 
     const addTask = async (listId, description, dueDate) => {
-
-        const response = await fetch(`${host}/lists/${listId}/addtask`, {
+        const response = await fetch(`${host}/tasks/${listId}/addtask`, {
             method: 'POST',
-
             headers: {
                 'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("token")
             },
-
             body: JSON.stringify({ description, dueDate }),
 
         });
@@ -43,20 +38,16 @@ const TaskState = (props) => {
         setTasks(tasks.concat(task));
 
     }
-
-
     // Editing the status of the task
 
     const editTaskStatus = async (taskId) => {
         try {
-
-            const response = await fetch(`${host}/lists/updatetaskstatus/${taskId}`, {
+            const response = await fetch(`${host}/tasks/updatetaskstatus/${taskId}`, {
                 method: 'PATCH',
-
                 headers: {
                     'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem("token")
                 },
-
                 body: JSON.stringify({ isCompleted: true }),
 
             });
@@ -78,23 +69,18 @@ const TaskState = (props) => {
         } catch (error) {
             console.log(error);
         }
-
-
     }
 
     //Editing the task
 
-    const editTask = async (list_id,task_id ,description,dueDate) => {
-
+    const editTask = async (task_id ,description,dueDate) => {
         try {
-
-            const response = await fetch(`${host}/lists/${list_id}/updatetask/${task_id}`, {
+            const response = await fetch(`${host}/tasks/updatetask/${task_id}`, {
                 method: 'PUT',
-
                 headers: {
                     'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem("token")
                 },
-
                 body: JSON.stringify({ description,dueDate }),
 
             });
@@ -112,7 +98,6 @@ const TaskState = (props) => {
 
             }
             setTasks(newTasks);
-
         } catch (error) {
             console.log(error);
         }
@@ -122,14 +107,13 @@ const TaskState = (props) => {
     //Deleting a task
 
     const deleteTask = async (taskId) => {
-
         try {
-
-            const response = await fetch(`${host}/lists/deletetask/${taskId}`, {
+            const response = await fetch(`${host}/tasks/deletetask/${taskId}`, {
                 method: 'DELETE',
 
                 headers: {
                     'Content-Type': 'application/json',
+                    "auth-token": localStorage.getItem("token")
                 },
             });
             const json = await response.json();
@@ -142,11 +126,6 @@ const TaskState = (props) => {
         } catch (error) {
             console.log(error);
         }
-
-       
-
-
-
     }
 
     return (
@@ -155,7 +134,5 @@ const TaskState = (props) => {
         </taskContext.Provider>
     )
 }
-
-
 
 export default TaskState

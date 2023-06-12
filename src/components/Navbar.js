@@ -35,15 +35,21 @@ const Navbar = () => {
 
 
   return (
-    <nav className="bg-emerald-900 text-white px-3 py-3 flex justify-end w-full">
+    <nav className="bg-teal-900 text-white px-3 py-3 flex justify-end w-full">
       <ul className="flex items-center">
         <li className="mx-5 cursor-pointer"><Link to="/" className=' underline underline-offset-4 decoration-white'>Home</Link></li>
         <li className="mx-5 cursor-pointer "><Link to="/" className='font-bold' >{name}</Link></li>
       </ul>
-      { !localStorage.getItem("token") ?<div>
+      { !localStorage.getItem("token") ?
+
+      <div>
         <button className="text-white font-bold bg-emerald-400 px-3 py-2 mx-3"><Link to="/login">Log in</Link></button>
         <button className="text-white font-bold bg-emerald-400 px-3 py-2 mx-3"><Link to="/signup">Sign up</Link></button>
-      </div>:<button className="text-white font-bold bg-emerald-400 px-3 py-2 mx-3" onClick={handleLogout}>Log out</button>}
+      </div>
+
+      :
+      
+      <button className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700  border-2 text-white py-2 px-3 rounded mx-2" type="button" onClick={handleLogout}>Log out</button>}
     </nav>
 
   )

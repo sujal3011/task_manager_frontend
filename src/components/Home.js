@@ -5,7 +5,7 @@ import Navbar from './Navbar'
 const Home = () => {
     return (
         <>
-            <div className='h-screen flex flex-col items-center'>
+            <div className='h-screen flex flex-col items-center bg-cyan-50'>
                 <Navbar />
                 <Lists />
             </div>
