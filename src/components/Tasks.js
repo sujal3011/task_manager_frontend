@@ -7,21 +7,32 @@ const Tasks = () => {
   const context = useContext(taskContext);
   const { tasks, getTasks, addTask, editTaskStatus, deleteTask } = context;
   const [task, setTask] = useState({ description: "", dueDate: Date.now });
-  const [dropdownopen, setDropdownopen] = useState(false);  //This state is for the dropdown menu to filter tasks 
+  const [dropdownfilteropen, setDropdownfilteropen] = useState(false);  //This state is for the dropdown menu to filter tasks 
+  const [dropdownsortopen, setDropdownsortopen] = useState(false);
+  const [taskstatus, setTaskstatus] = useState("all");
+  const [taskorder, setTaskorder] = useState("assignedDate_ascending");
 
-  const handleDropDownClick=()=>{
-    setDropdownopen(!dropdownopen);
+  const handleDropDownFilterClick = () => {
+    setDropdownfilteropen(!dropdownfilteropen);
+  }
+
+  const handleDropDownSortClick = () => {
+    setDropdownsortopen(!dropdownsortopen);
   }
 
   const { list_id } = useParams();
 
-  const handleStatusSelect=(status)=>{
-    getTasks(list_id,status);
-    setDropdownopen(false);
+  const handleStatusSelect = (status) => {
+    //getTasks(list_id, status);
+    setTaskstatus(status);
+    setDropdownfilteropen(false);
   }
 
+  const handleSortSelect = (order) => {
+    setTaskorder(order);
+    setDropdownsortopen(false);
 
-
+  }
 
   const onChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
@@ -51,8 +62,10 @@ const Tasks = () => {
   }
 
   useEffect(() => {
-    getTasks(list_id);
-  }, []);
+
+    getTasks(list_id,taskstatus,taskorder);
+
+  }, [taskstatus,taskorder]);
 
   return (
 
@@ -82,38 +95,86 @@ const Tasks = () => {
 
         <div className='flex flex-col items-center justify-center bg-white shadow-2xl w-11/12 sm:w-3/5 mb-5'>
 
-          <div className='flex  rounded-t items-center justify-center px-3 py-3 w-11/12 mt-4 '>
+          <div className='flex rounded-t items-center justify-center px-3 py-3 w-11/12 mt-4 '>
             <h1 className="my-4 text-xl font-extrabold text-teal-600 md:text-5xl lg:text-6xl">My Tasks</h1>
           </div>
 
 
-          <div className="relative inline-block text-left">
-            <div>
-              <button type="button" className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={handleDropDownClick}>
-                Filter
-                <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
+          <div className='flex items-center justify-center w-11/12'>
 
-            {
-              dropdownopen &&  <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-              <div className="py-1" role="none">
+            <div className='flex items-center justify-center'>
 
-                <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-0"  onClick={()=>{handleStatusSelect("all")}}>All</button>
-                <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-1"  onClick={()=>{handleStatusSelect("completed")}}>Completed</button>
-                <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-2"  onClick={()=>{handleStatusSelect("active")}}>Active</button>
-                <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-2"  onClick={()=>{handleStatusSelect("pending")}}>Pending</button>
-                
-                
+              <div className="md:w-2/3">
+                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white " id="inline-full-name" type="text" placeholder='Search' />
               </div>
+
+              <button type="submit" className="p-2.5 ml-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <span className="sr-only">Search</span>
+              </button>
+
             </div>
 
-            }
+            <div className="relative inline-block text-left mx-2">
+              <div>
+                <button type="button" className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={handleDropDownFilterClick}>
+                  {taskstatus}
+                  <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
 
-           
+              {
+                dropdownfilteropen && <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                  <div className="py-1" role="none">
+
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-0" onClick={() => { handleStatusSelect("all") }}>All</button>
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-1" onClick={() => { handleStatusSelect("completed") }}>Completed</button>
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-2" onClick={() => { handleStatusSelect("active") }}>Active</button>
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-2" onClick={() => { handleStatusSelect("pending") }}>Pending</button>
+
+
+                  </div>
+                </div>
+
+              }
+
+
+            </div>
+
+            <div className="relative inline-block text-left mx-2">
+              <div>
+                <button type="button" className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={handleDropDownSortClick}>
+                  {taskorder}
+                  <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+
+              {
+                dropdownsortopen && <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                  <div className="py-1" role="none">
+
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-0" onClick={()=>{handleSortSelect("assignedDate_ascending")}}>Added Date (ascending)</button>
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-1" onClick={()=>{handleSortSelect("assignedDate_descending")}}>Added Date (descending)</button>
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-1" onClick={()=>{handleSortSelect("dueDate_ascending")}}>Due Date (ascending)</button>
+                    <button className="text-gray-700 block px-4 py-2 text-sm w-full text-left hover:bg-gray-300" role="menuitem" tabIndex="-1" id="menu-item-1" onClick={()=>{handleSortSelect("dueDate_descending")}}>Due Date (descending)</button>
+
+
+
+                  </div>
+                </div>
+
+              }
+
+
+            </div>
+
           </div>
+
+
 
 
           <div className='flex flex-col items-center justify-center px-3 py-3 mb-4 w-11/12 '>
