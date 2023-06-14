@@ -7,8 +7,9 @@ const TaskState = (props) => {
 
     //Fetching all tasks
 
-    const getTasks = async (list_id,status="all",order="assignedDate_ascending") => {
-        const response = await fetch(`${host}/tasks/${list_id}/gettasks?status=${status}&order=${order}`, {
+    const getTasks = async (list_id,status="all",order="assignedDate_ascending",query) => {
+        console.log(query);
+        const response = await fetch(`${host}/tasks/${list_id}/gettasks?status=${status}&order=${order}&query=${query}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

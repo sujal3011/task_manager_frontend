@@ -4,13 +4,11 @@ import { useNavigate,Link } from 'react-router-dom';
 const Login = () => {
 
     const navigate=useNavigate();
-
     const [credentials, setCredentials] = useState({email: "", password: ""});
 
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     }
-
     const onSubmit= async (e)=>{
         e.preventDefault();
         const response = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/auth/login`, {
@@ -24,7 +22,6 @@ const Login = () => {
         });
 
         const json = await response.json();
-        console.log(json);
 
         if(json.success){
             //storing the auth token on the local storage and redirecting the logged in user to home page

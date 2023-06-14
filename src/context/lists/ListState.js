@@ -7,9 +7,9 @@ const ListState = (props) => {
 
     //Fetching all lists
 
-    const getLists = async () => {
+    const getLists = async (query) => {
 
-        const response = await fetch(`${host}/lists/getlists`, {
+        const response = await fetch(`${host}/lists/getlists?query=${query}`, {
             method: 'GET',
 
             headers: {

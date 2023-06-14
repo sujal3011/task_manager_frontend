@@ -11,6 +11,7 @@ const Tasks = () => {
   const [dropdownsortopen, setDropdownsortopen] = useState(false);
   const [taskstatus, setTaskstatus] = useState("all");
   const [taskorder, setTaskorder] = useState("assignedDate_ascending");
+  const [query, setQuery] = useState("");
 
   const handleDropDownFilterClick = () => {
     setDropdownfilteropen(!dropdownfilteropen);
@@ -41,9 +42,6 @@ const Tasks = () => {
   const handleClick = () => {
 
     if (task.description.length >= 5) {
-      console.log(list_id);
-      console.log(task.dueDate);
-      console.log(Date.now)
       addTask(list_id, task.description, task.dueDate);
       setTask({ description: "", dueDate: Date.now })
 
@@ -63,9 +61,9 @@ const Tasks = () => {
 
   useEffect(() => {
 
-    getTasks(list_id,taskstatus,taskorder);
+    getTasks(list_id,taskstatus,taskorder,query);
 
-  }, [taskstatus,taskorder]);
+  }, [taskstatus,taskorder,query]);
 
   return (
 
@@ -104,15 +102,9 @@ const Tasks = () => {
 
             <div className='flex items-center justify-center'>
 
-              <div className="md:w-2/3">
-                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white " id="inline-full-name" type="text" placeholder='Search' />
+              <div className="md:w-full">
+                <input className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white " id="inline-full-name" type="text" placeholder='Search' onChange={(e)=>{setQuery(e.target.value)}} />
               </div>
-
-              <button type="submit" className="p-2.5 ml-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-teal-600 dark:hover:bg-teal-700 dark:focus:ring-teal-800">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <span className="sr-only">Search</span>
-              </button>
-
             </div>
 
             <div className="relative inline-block text-left mx-2">
