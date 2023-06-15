@@ -9,6 +9,7 @@ import TaskState from './context/tasks/TaskState';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import UpdateTask from './components/UpdateTask';
+import Redirect from './components/Redirect';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/updateList/:id" element={<UpdateList />} />
             <Route path="/:list_id/tasks" element={<Tasks />} />
             <Route path="/:list_id/updateTask/:task_id" element={<UpdateTask/>} />
+            <Route path="/redirect" element={<Redirect />} />
           </Routes>
         </Router>
       </ListState>
